@@ -20,7 +20,6 @@ def get_users(user_jwt:str):
     try:
         user_info = jwt.decode(user_jwt, "secret", algorithms=["HS256"])
         print(user_info)
-        id=0
         logger.info("User data retreived")
         return users
     
