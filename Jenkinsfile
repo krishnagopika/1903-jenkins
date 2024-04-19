@@ -27,6 +27,16 @@ pipeline {
                      }
                 }
             }
+        }
+
+        stage('run the docker container') {
+            steps {
+                scripts {
+                    docker.image('$IMAGE:latest').pull()
+                    docker.image('$IMAGE:latest').run(name: 'demo-app', detach: true, ports:['80:80'],    
+                }
+            }
+        }
             
     }
 }
