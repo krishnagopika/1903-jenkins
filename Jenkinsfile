@@ -31,7 +31,7 @@ pipeline {
 
         stage('run the docker container') {
             steps {
-                scripts {
+                script {
                     docker.image('$IMAGE:latest').pull("")
                     docker.image('$IMAGE:latest').run("-p 80:80 -d")  
                 }
