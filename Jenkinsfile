@@ -1,8 +1,8 @@
-pipeline {
-    def dockerImage
+pipeline { 
     environment {
         IMAGE = "krishnagopika4/demo-cicd-1903"
         registryCredential = 'dockerhub'
+        dockerImage = ''
     }
     agent any 
     stages {
