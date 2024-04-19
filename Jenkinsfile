@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     docker.image("$IMAGE:latest").pull("")
-                    docker.image("$IMAGE:latest").run("-p 80:80 -d --name demo-container")  
+                    dockerImage.run("-p 80:80 -d --name demo-container")  
                 }
             }
         
