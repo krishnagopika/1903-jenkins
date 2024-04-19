@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        IMAGE = "krishnagopika4/demo-cicd-1903"
+        dockerHubCredentials = 'dockerhub'
+    }
     agent any 
     stages {
         stage('checkout') {
@@ -9,8 +13,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t krishnagopika4/demo-cicd-1903'
+                script {
+                dockerImage = docker.build "${IMAGE}:latest"
+                }
             }
         }
+
+        stage('Push image to docker hub') {
+            steps {
+                    script {
+                     docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                     }
+                }
+            }
+            
     }
 }
