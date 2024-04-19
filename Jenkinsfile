@@ -1,4 +1,9 @@
-pipeline {
+pipeline { 
+    environment {
+        IMAGE = "krishnagopika4/demo-cicd-1903"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
     agent any 
     stages {
         stage('checkout') {
@@ -7,11 +12,29 @@ pipeline {
                 url: 'https://github.com/krishnagopika/1903-jenkins.git'
                 }
         }
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'sudo docker build . -t app'
-                sh 'sudo docker run -p -d 8000:8000 app' 
+                script {
+                    dockerImage = docker.build "${IMAGE}:latest"
+                }
             }
         }
+
+        stage('Push image to docker hub') {
+            steps {
+                    script {
+                     docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                     }
+                }
+            }
+        }
+
+        stage('run the docker container') {
+            steps {
+                sh 'docker run -d -p 80:80 --name demo-app ${IMAGE}:latest'
+            }
+        
+        } 
     }
 }
