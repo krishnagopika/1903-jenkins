@@ -32,10 +32,7 @@ pipeline {
 
         stage('run the docker container') {
             steps {
-                script {
-                    docker.image("$IMAGE:latest").pull()
-                    dockerImage.run("-p 80:80 -d --name demo-container")  
-                }
+                sh 'docker run -d -p 80:80 --name demo-app ${IMAGE}:latest'
             }
         
         } 
