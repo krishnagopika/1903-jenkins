@@ -1,4 +1,5 @@
 pipeline {
+    def dockerImage
     environment {
         IMAGE = "krishnagopika4/demo-cicd-1903"
         registryCredential = 'dockerhub'
@@ -14,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                def dockerImage = docker.build "${IMAGE}:latest"
+                    dockerImage = docker.build "${IMAGE}:latest"
                 }
             }
         }
